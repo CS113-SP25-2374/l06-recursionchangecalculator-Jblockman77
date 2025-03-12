@@ -27,6 +27,32 @@ public class ChangeCalculatorRecursive extends ChangeCalculator {
         // Implement a recursive solution following the given documentation.
         List<String> combinations = new ArrayList<>();
 
+        calcHelper(combinations, cents, 0, 0, 0, 0);
         return combinations;
+    }
+
+    public static void calcHelper(List<String> list, int cents, int penny, int nickel, int dime, int quater){
+
+        if(cents == 0){
+            String combo = combinationToString(quater, dime, nickel, penny);
+            if(!list.contains(combo)){
+                list.add(combo);
+            }
+        }
+
+        if(cents >= 25){
+            calcHelper(list, cents-25, penny, nickel, dime, quater+1);
+            
+        }
+        if(cents >= 10){
+            calcHelper(list, cents-10, penny, nickel, dime+1, quater);
+        }
+        if(cents >= 5){
+            calcHelper(list, cents-5, penny, nickel+1, dime, quater);
+        }
+        if(cents >= 1){
+            calcHelper(list, cents-1, penny+1, nickel, dime, quater);
+        }
+        
     }
 }
