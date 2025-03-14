@@ -23,7 +23,6 @@ public class ChangeCalculatorRecursive extends ChangeCalculator {
      * @return the total number of unique combinations of coins of which the given value is comprised
      */
     public static List<String> calculateRecursive(int cents) {
-        // TODO:
         // Implement a recursive solution following the given documentation.
         List<String> combinations = new ArrayList<>();
 
@@ -37,22 +36,23 @@ public class ChangeCalculatorRecursive extends ChangeCalculator {
             String combo = combinationToString(quater, dime, nickel, penny);
             if(!list.contains(combo)){
                 list.add(combo);
+                return;
             }
         }
 
-        if(cents >= 25){
-            calcHelper(list, cents-25, penny, nickel, dime, quater+1);
-            
+        if(cents < 0){
+            return;
         }
-        if(cents >= 10){
+
+        if(cents % 25 == 0){
+            calcHelper(list, cents-25, penny, nickel, dime, quater+1);
+        }
+        if(cents % 10 == 0){
             calcHelper(list, cents-10, penny, nickel, dime+1, quater);
         }
-        if(cents >= 5){
+        if(cents % 5 == 0){
             calcHelper(list, cents-5, penny, nickel+1, dime, quater);
         }
-        if(cents >= 1){
-            calcHelper(list, cents-1, penny+1, nickel, dime, quater);
-        }
-        
+        calcHelper(list, cents-1, penny+1, nickel, dime, quater);
     }
 }
